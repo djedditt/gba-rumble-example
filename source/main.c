@@ -36,23 +36,25 @@ void handleInput()
     }
 }
 
-//---------------------------------------------------------------------------------
-// Program entry point
-//---------------------------------------------------------------------------------
-int main(void) {
-//---------------------------------------------------------------------------------
+void displayRumbleMessage()
+{
+    if(rumbleIsActive())
+    {
+        iprintf("\x1b[14;0H        RUMBLE ACTIVE!        \n");
+    }
+    else
+    {
+        iprintf("\x1b[14;0H                              \n");
+    }
+}
 
-
-    // The vblank interrupt must be enabled for VBlankIntrWait() to work
-    // since the default dispatcher handles the bios flags no vblank handler
-    // is required
+int main()
+{
     irqInit();
     irqEnable(IRQ_VBLANK);
-    
-    SetMode(MODE_0 | BG0_ON);
-    
-    consoleInit(0, 4, 0, NULL, 0, 0);
-    BG_COLORS[1]=RGB5(31,31,31);
+
+    consoleDemoInit();
+    BG_COLORS[0] = RGB5(0,0,0);
     
     rumbleInit();
 
@@ -72,15 +74,7 @@ int main(void) {
     {
         VBlankIntrWait();
         handleInput();
-        rumble();
-
-        if(rumbleIsActive())
-        {
-            iprintf("\x1b[14;0H        RUMBLE ACTIVE!        \n");
-        }
-        else
-        {
-            iprintf("\x1b[14;0H                              \n");
-        }
+        rumbleUpdateTimer();
+        displayRumbleMessage();
     }
 }

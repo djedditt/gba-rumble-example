@@ -15,6 +15,6 @@ void rumbleStart();
 void rumbleStop();
 void rumbleToggle();
 void rumbleSetTimer(int frames);
-void rumble();
+void rumbleUpdateTimer();
 
 #endif

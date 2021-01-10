@@ -7,8 +7,8 @@ bool rumbleTimerActive = false;
 
 void rumbleInit()
 {
-    GPIO_PORT_DIRECTION |= (1 << 3);
-    GPIO_PORT_CONTROL |= (1 << 0);
+    GPIO_PORT_DIRECTION = (1 << 3);
+    GPIO_PORT_CONTROL = 1;
 }
 
 bool rumbleIsActive()
@@ -50,7 +50,7 @@ void rumbleSetTimer(int frames)
 }
 
 // Should be called every frame
-void rumble()
+void rumbleUpdateTimer()
 {
     if(rumbleTimerActive)
     {
