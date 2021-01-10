@@ -43,19 +43,20 @@ int main(void) {
 //---------------------------------------------------------------------------------
 
 
-    // the vblank interrupt must be enabled for VBlankIntrWait() to work
+    // The vblank interrupt must be enabled for VBlankIntrWait() to work
     // since the default dispatcher handles the bios flags no vblank handler
     // is required
     irqInit();
     irqEnable(IRQ_VBLANK);
-
+    
+    SetMode(MODE_0 | BG0_ON);
+    
     consoleInit(0, 4, 0, NULL, 0, 0);
     BG_COLORS[1]=RGB5(31,31,31);
-    SetMode(MODE_0 | BG0_ON);
-
+    
     rumbleInit();
 
-    // ansi escape sequence to set print co-ordinates
+    // ANSI escape sequence to set print coordinates
     // /x1b[line;columnH
     iprintf("\x1b[1;0H   GBA rumble example v0.1    \n");
     iprintf("\x1b[2;0H     github.com/djedditt      \n");
